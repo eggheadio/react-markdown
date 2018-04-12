@@ -128,6 +128,15 @@ function getNodeProps(node, key, opts, renderer, parent, index) {
     case 'virtualHtml':
       props.tag = node.tag
       break
+    case 'shortcode':
+      let additionalProps = {}
+      for (const prop in node) {
+        if (prop !== 'position') {
+          additionalProps[prop] = node[prop]
+        }
+      }
+      assignDefined(props, additionalProps);
+      break;
     case 'html':
       // @todo find a better way than this
       props.isBlock = node.position.start.line !== node.position.end.line
